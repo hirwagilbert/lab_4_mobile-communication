@@ -1,0 +1,72 @@
+Weights: data_rate=1, coverage=2, battery=1.5, mobility=1.5, infrastructure=1, cost=1
+
+Scenario: 1. Smart water meter
+  basement/underground meters, 50 B per day, 15-year battery, stationary, utility buys operator connectivity, 50 000 units on a strict budget
+  inputs: 4.6296e-06 kbps average, coverage=deep_indoor, battery=15 y, mobility=stationary, infrastructure=operator, devices=50000, budget=strict
+  demands (0-5): data rate=1, coverage=5, battery life=5, mobility=1, infrastructure fit=5, cost=5
+  rank technology      base  rules   score   justification
+  1    NB-IoT          93.8     +0    93.8   meets data rate, coverage, mobility; held back by battery life (needs 5, offers 4) and cost (needs 5, offers 4).
+  2    LoRaWAN         82.5     +0    82.5   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 3) and infrastructure fit (needs 5, offers 2).
+  3    LTE-M           82.5    -10    72.5   meets data rate, mobility; held back by battery life (needs 5, offers 3) and cost (needs 5, offers 3); R5 -10.
+  4    5G RedCap       63.8    -20    43.8   meets data rate, mobility; held back by coverage (needs 5, offers 2) and battery life (needs 5, offers 2); R5 -10; R7 -10.
+  5    BLE/Zigbee      70.0    -40    30.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 1) and infrastructure fit (needs 5, offers 1); R2 -40.
+  expected top pick: NB-IoT  ->  tool says NB-IoT  [MATCH]
+
+Scenario: 2. Fleet-tracked shipping container
+  position + temperature, 100 B per hour, 2-year battery, crosses countries, needs roaming, 2 000 units
+  inputs: 0.00022222 kbps average, coverage=wide_area_cellular, battery=2 y, mobility=global, infrastructure=operator, devices=2000, budget=moderate
+  demands (0-5): data rate=1, coverage=5, battery life=2, mobility=5, infrastructure fit=5, cost=3
+  rank technology      base  rules   score   justification
+  1    LTE-M          100.0     +0   100.0   meets data rate, coverage, battery life.
+  2    5G RedCap       90.0     +0    90.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 4) and infrastructure fit (needs 5, offers 4).
+  3    NB-IoT          87.5     +0    87.5   meets data rate, battery life; held back by mobility (needs 5, offers 3) and coverage (needs 5, offers 4).
+  4    LoRaWAN         66.2    -30    36.2   meets data rate, battery life; held back by coverage (needs 5, offers 2) and mobility (needs 5, offers 2); R1 -20; R7 -10.
+  5    BLE/Zigbee      53.8    -40    13.8   meets data rate, battery life; held back by coverage (needs 5, offers 0) and mobility (needs 5, offers 2); R2 -40.
+  expected top pick: LTE-M  ->  tool says LTE-M  [MATCH]
+
+Scenario: 3. Factory-floor sensor network
+  site-wide vibration/temperature, 50 B every 10 s, owned gateways, 3 000 fixed sensors, 8-year battery, strict budget
+  inputs: 0.04 kbps average, coverage=long_range_rural, battery=8 y, mobility=stationary, infrastructure=self_owned, devices=3000, budget=strict
+  demands (0-5): data rate=1, coverage=5, battery life=4, mobility=1, infrastructure fit=5, cost=4
+  rank technology      base  rules   score   justification
+  1    LoRaWAN        100.0     +8   100.0   meets data rate, coverage, battery life; R3 +8.
+  2    NB-IoT          80.0     +0    80.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 3) and infrastructure fit (needs 5, offers 1).
+  3    LTE-M           76.2    -10    66.2   meets data rate, mobility; held back by coverage (needs 5, offers 3) and infrastructure fit (needs 5, offers 2); R5 -10.
+  4    5G RedCap       65.0    -20    45.0   meets data rate, mobility; held back by coverage (needs 5, offers 2) and battery life (needs 4, offers 2); R5 -10; R7 -10.
+  5    BLE/Zigbee      75.0    -32    43.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 0); R2 -40; R3 +8.
+  expected top pick: LoRaWAN  ->  tool says LoRaWAN  [MATCH]
+
+Scenario: 4. Wearable health monitor
+  heart-rate stream to a phone, about 10 kbps, one-week battery, moves with the wearer, 1 000 units
+  inputs: 10 kbps average, coverage=short_range, battery=0.02 y, mobility=local, infrastructure=no_preference, devices=1000, budget=moderate
+  demands (0-5): data rate=2, coverage=5, battery life=1, mobility=2, infrastructure fit=5, cost=3
+  rank technology      base  rules   score   justification
+  1    BLE/Zigbee     100.0     +0   100.0   meets data rate, coverage, battery life.
+  2    LoRaWAN         85.0    -10    75.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 2); R7 -10.
+  3    NB-IoT          80.0    -10    70.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 1); R6 -10.
+  4    LTE-M           80.0    -10    70.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 1); R6 -10.
+  5    5G RedCap       77.5    -10    67.5   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 1) and cost (needs 3, offers 2); R6 -10.
+  expected top pick: BLE/Zigbee  ->  tool says BLE/Zigbee  [MATCH]
+
+Scenario: 5. NEW: livestock tracking collars on a ranch
+  30 km2 ranch, 800 collars, 30 B GPS fix every 15 min, animals roam slowly (local mobility), 3-year battery, no guaranteed cellular coverage, owner has no ownership preference but a strict budget
+  inputs: 0.00026667 kbps average, coverage=long_range_rural, battery=3 y, mobility=local, infrastructure=no_preference, devices=800, budget=strict
+  demands (0-5): data rate=1, coverage=5, battery life=2, mobility=2, infrastructure fit=5, cost=3
+  rank technology      base  rules   score   justification
+  1    LoRaWAN        100.0     +0   100.0   meets data rate, coverage, battery life.
+  2    NB-IoT          90.0     +0    90.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 3).
+  3    LTE-M           90.0     +0    90.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 3).
+  4    5G RedCap       82.5    -10    72.5   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 2) and cost (needs 3, offers 2); R7 -10.
+  5    BLE/Zigbee      75.0    -40    35.0   meets data rate, battery life, mobility; held back by coverage (needs 5, offers 0); R2 -40.
+  expected top pick: LoRaWAN  ->  tool says LoRaWAN  [MATCH]
+
+Top pick equals the expected technology in 5 of 5 scenarios.
+
+Weight sensitivity: top pick when ONE weight is halved / doubled (base weights data_rate=1, coverage=2, battery=1.5, mobility=1.5, infrastructure=1, cost=1)
+  scenario                                      base pick    changes    detail
+  1. Smart water meter                          NB-IoT       0          stable under all 12 variations
+  2. Fleet-tracked shipping container           LTE-M        0          stable under all 12 variations
+  3. Factory-floor sensor network               LoRaWAN      0          stable under all 12 variations
+  4. Wearable health monitor                    BLE/Zigbee   0          stable under all 12 variations
+  5. NEW: livestock tracking collars on a ranch LoRaWAN      0          stable under all 12 variations
+  5 of 5 scenarios keep the same winner under all 12 single-weight changes

@@ -1,0 +1,11 @@
+{
+  "_comment": "Per-topic alert thresholds. An exact topic wins; otherwise the default for the last topic level (the measurement type) is used. Unknown measurement types are logged but never alert.",
+  "topics": {
+    "plant1/lineA/temperature": 85.0,
+    "plant1/lineB/temperature": 80.0
+  },
+  "defaults_by_measurement": {
+    "temperature": 80.0,
+    "vibration": 7.0
+  }
+}

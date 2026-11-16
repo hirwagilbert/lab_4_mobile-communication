@@ -1,0 +1,6 @@
+scenario,expected,rank1,rank2,rank3,rank4,rank5
+1. Smart water meter,NB-IoT,NB-IoT (93.8),LoRaWAN (82.5),LTE-M (72.5),5G RedCap (43.8),BLE/Zigbee (30.0)
+2. Fleet-tracked shipping container,LTE-M,LTE-M (100.0),5G RedCap (90.0),NB-IoT (87.5),LoRaWAN (36.2),BLE/Zigbee (13.8)
+3. Factory-floor sensor network,LoRaWAN,LoRaWAN (100.0),NB-IoT (80.0),LTE-M (66.2),5G RedCap (45.0),BLE/Zigbee (43.0)
+4. Wearable health monitor,BLE/Zigbee,BLE/Zigbee (100.0),LoRaWAN (75.0),NB-IoT (70.0),LTE-M (70.0),5G RedCap (67.5)
+5. NEW: livestock tracking collars on a ranch,LoRaWAN,LoRaWAN (100.0),NB-IoT (90.0),LTE-M (90.0),5G RedCap (72.5),BLE/Zigbee (35.0)

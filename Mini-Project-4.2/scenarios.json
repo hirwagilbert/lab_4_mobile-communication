@@ -1,0 +1,66 @@
+[
+  {
+    "name": "1. Smart water meter",
+    "expected": "NB-IoT",
+    "note": "basement/underground meters, 50 B per day, 15-year battery, stationary, utility buys operator connectivity, 50 000 units on a strict budget",
+    "message_bytes": 50,
+    "interval_s": 86400,
+    "coverage": "deep_indoor",
+    "battery_years": 15,
+    "mobility": "stationary",
+    "infrastructure": "operator",
+    "devices": 50000,
+    "budget": "strict"
+  },
+  {
+    "name": "2. Fleet-tracked shipping container",
+    "expected": "LTE-M",
+    "note": "position + temperature, 100 B per hour, 2-year battery, crosses countries, needs roaming, 2 000 units",
+    "message_bytes": 100,
+    "interval_s": 3600,
+    "coverage": "wide_area_cellular",
+    "battery_years": 2,
+    "mobility": "global",
+    "infrastructure": "operator",
+    "devices": 2000,
+    "budget": "moderate"
+  },
+  {
+    "name": "3. Factory-floor sensor network",
+    "expected": "LoRaWAN",
+    "note": "site-wide vibration/temperature, 50 B every 10 s, owned gateways, 3 000 fixed sensors, 8-year battery, strict budget",
+    "message_bytes": 50,
+    "interval_s": 10,
+    "coverage": "long_range_rural",
+    "battery_years": 8,
+    "mobility": "stationary",
+    "infrastructure": "self_owned",
+    "devices": 3000,
+    "budget": "strict"
+  },
+  {
+    "name": "4. Wearable health monitor",
+    "expected": "BLE/Zigbee",
+    "note": "heart-rate stream to a phone, about 10 kbps, one-week battery, moves with the wearer, 1 000 units",
+    "data_rate_kbps": 10,
+    "coverage": "short_range",
+    "battery_years": 0.02,
+    "mobility": "local",
+    "infrastructure": "no_preference",
+    "devices": 1000,
+    "budget": "moderate"
+  },
+  {
+    "name": "5. NEW: livestock tracking collars on a ranch",
+    "expected": "LoRaWAN",
+    "note": "30 km2 ranch, 800 collars, 30 B GPS fix every 15 min, animals roam slowly (local mobility), 3-year battery, no guaranteed cellular coverage, owner has no ownership preference but a strict budget",
+    "message_bytes": 30,
+    "interval_s": 900,
+    "coverage": "long_range_rural",
+    "battery_years": 3,
+    "mobility": "local",
+    "infrastructure": "no_preference",
+    "devices": 800,
+    "budget": "strict"
+  }
+]

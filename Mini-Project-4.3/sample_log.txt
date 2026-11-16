@@ -1,0 +1,282 @@
+
+====================================================================================================
+A. Normal operation: 3 sensors -> 1 broker -> 1 aggregator using ONE wildcard subscription 'plant1/+/+'
+====================================================================================================
+AGGREGATOR | [12:42:55.657] aggregator subscribed to 'plant1/+/+' (single wildcard, QoS 1)
+AGGREGATOR | [12:42:55.712] NEW TOPIC discovered: plant1/lineA/vibration (threshold 7.0)
+AGGREGATOR | [12:42:55.712] READING plant1/lineA/vibration = 3.68 qos=1
+A-vib      | [sensor-lineA-vibration] connected  topic=plant1/lineA/vibration qos=1 interval=0.7s retain=True lwt=False
+A-vib      | [sensor-lineA-vibration] #1 -> plant1/lineA/vibration 3.68 mm/s
+A-temp     | [sensor-lineA-temperature] connected  topic=plant1/lineA/temperature qos=1 interval=0.5s retain=True lwt=False
+AGGREGATOR | [12:42:55.744] NEW TOPIC discovered: plant1/lineA/temperature (threshold 85.0)
+AGGREGATOR | [12:42:55.744] READING plant1/lineA/temperature = 72.58 qos=1
+A-temp     | [sensor-lineA-temperature] #1 -> plant1/lineA/temperature 72.58 C
+B-temp     | [sensor-lineB-temperature] connected  topic=plant1/lineB/temperature qos=1 interval=0.6s retain=True lwt=True
+AGGREGATOR | [12:42:55.747] STATUS  plant1/lineB/status = online:temperature qos=1
+AGGREGATOR | [12:42:55.747] NEW TOPIC discovered: plant1/lineB/temperature (threshold 80.0)
+AGGREGATOR | [12:42:55.747] READING plant1/lineB/temperature = 70.90 qos=1
+B-temp     | [sensor-lineB-temperature] #1 -> plant1/lineB/temperature 70.90 C
+AGGREGATOR | [12:42:56.245] READING plant1/lineA/temperature = 69.25 qos=1
+A-temp     | [sensor-lineA-temperature] #2 -> plant1/lineA/temperature 69.25 C
+B-temp     | [sensor-lineB-temperature] #2 -> plant1/lineB/temperature 69.55 C
+AGGREGATOR | [12:42:56.348] READING plant1/lineB/temperature = 69.55 qos=1
+AGGREGATOR | [12:42:56.413] READING plant1/lineA/vibration = 2.86 qos=1
+A-vib      | [sensor-lineA-vibration] #2 -> plant1/lineA/vibration 2.86 mm/s
+AGGREGATOR | [12:42:56.746] READING plant1/lineA/temperature = 69.15 qos=1
+A-temp     | [sensor-lineA-temperature] #3 -> plant1/lineA/temperature 69.15 C
+B-temp     | [sensor-lineB-temperature] #3 -> plant1/lineB/temperature 71.21 C
+AGGREGATOR | [12:42:56.949] READING plant1/lineB/temperature = 71.21 qos=1
+A-vib      | [sensor-lineA-vibration] #3 -> plant1/lineA/vibration 3.63 mm/s
+AGGREGATOR | [12:42:57.114] READING plant1/lineA/vibration = 3.63 qos=1
+AGGREGATOR | [12:42:57.247] READING plant1/lineA/temperature = 69.97 qos=1
+A-temp     | [sensor-lineA-temperature] #4 -> plant1/lineA/temperature 69.97 C
+B-temp     | [sensor-lineB-temperature] #4 -> plant1/lineB/temperature 71.99 C
+AGGREGATOR | [12:42:57.550] READING plant1/lineB/temperature = 71.99 qos=1
+A-temp     | [sensor-lineA-temperature] #5 -> plant1/lineA/temperature 71.32 C
+AGGREGATOR | [12:42:57.748] READING plant1/lineA/temperature = 71.32 qos=1
+AGGREGATOR | [12:42:57.815] READING plant1/lineA/vibration = 2.68 qos=1
+A-vib      | [sensor-lineA-vibration] #4 -> plant1/lineA/vibration 2.68 mm/s
+B-temp     | [sensor-lineB-temperature] #5 -> plant1/lineB/temperature 68.77 C
+AGGREGATOR | [12:42:58.151] READING plant1/lineB/temperature = 68.77 qos=1
+A-temp     | [sensor-lineA-temperature] #6 -> plant1/lineA/temperature 82.46 C
+AGGREGATOR | [12:42:58.249] READING plant1/lineA/temperature = 82.46 qos=1
+AGGREGATOR | [12:42:58.516] READING plant1/lineA/vibration = 9.00 qos=1
+AGGREGATOR | [12:42:58.516] ALERT   plant1/lineA/vibration = 9.00 exceeds 7.0
+A-vib      | [sensor-lineA-vibration] #5 -> plant1/lineA/vibration 9.00 mm/s
+A-temp     | [sensor-lineA-temperature] #7 -> plant1/lineA/temperature 70.71 C
+AGGREGATOR | [12:42:58.750] READING plant1/lineA/temperature = 70.71 qos=1
+AGGREGATOR | [12:42:58.751] READING plant1/lineB/temperature = 81.89 qos=1
+AGGREGATOR | [12:42:58.751] ALERT   plant1/lineB/temperature = 81.89 exceeds 80.0
+B-temp     | [sensor-lineB-temperature] #6 -> plant1/lineB/temperature 81.89 C
+AGGREGATOR | [12:42:59.217] READING plant1/lineA/vibration = 9.43 qos=1
+A-vib      | [sensor-lineA-vibration] #6 -> plant1/lineA/vibration 9.43 mm/s
+AGGREGATOR | [12:42:59.250] READING plant1/lineA/temperature = 67.43 qos=1
+A-temp     | [sensor-lineA-temperature] #8 -> plant1/lineA/temperature 67.43 C
+AGGREGATOR | [12:42:59.352] READING plant1/lineB/temperature = 70.11 qos=1
+AGGREGATOR | [12:42:59.352] CLEARED plant1/lineB/temperature = 70.11 back under 80.0
+B-temp     | [sensor-lineB-temperature] #7 -> plant1/lineB/temperature 70.11 C
+AGGREGATOR | [12:42:59.664] ---- SUMMARY: latest value per topic ----
+AGGREGATOR |     topic                         latest    n     min     max  limit  state
+AGGREGATOR |     plant1/lineA/temperature       67.43    8   67.43   82.46   85.0  ok
+AGGREGATOR |     plant1/lineA/vibration          9.43    6    2.68    9.43    7.0  ALERT
+AGGREGATOR |     plant1/lineB/temperature       70.11    7   68.77   81.89   80.0  ok
+AGGREGATOR |     plant1/lineB/status         online:temperature
+AGGREGATOR |     alerts raised so far: 2
+AGGREGATOR | [12:42:59.751] READING plant1/lineA/temperature = 67.34 qos=1
+A-temp     | [sensor-lineA-temperature] #9 -> plant1/lineA/temperature 67.34 C
+AGGREGATOR | [12:42:59.918] READING plant1/lineA/vibration = 3.27 qos=1
+AGGREGATOR | [12:42:59.918] CLEARED plant1/lineA/vibration = 3.27 back under 7.0
+A-vib      | [sensor-lineA-vibration] #7 -> plant1/lineA/vibration 3.27 mm/s
+AGGREGATOR | [12:42:59.953] READING plant1/lineB/temperature = 70.85 qos=1
+B-temp     | [sensor-lineB-temperature] #8 -> plant1/lineB/temperature 70.85 C
+AGGREGATOR | [12:43:00.253] READING plant1/lineA/temperature = 71.02 qos=1
+A-temp     | [sensor-lineA-temperature] #10 -> plant1/lineA/temperature 71.02 C
+AGGREGATOR | [12:43:00.554] READING plant1/lineB/temperature = 68.99 qos=1
+B-temp     | [sensor-lineB-temperature] #9 -> plant1/lineB/temperature 68.99 C
+AGGREGATOR | [12:43:00.619] READING plant1/lineA/vibration = 3.41 qos=1
+A-vib      | [sensor-lineA-vibration] #8 -> plant1/lineA/vibration 3.41 mm/s
+AGGREGATOR | [12:43:00.754] READING plant1/lineA/temperature = 69.38 qos=1
+A-temp     | [sensor-lineA-temperature] #11 -> plant1/lineA/temperature 69.38 C
+AGGREGATOR | [12:43:01.156] READING plant1/lineB/temperature = 69.69 qos=1
+B-temp     | [sensor-lineB-temperature] #10 -> plant1/lineB/temperature 69.69 C
+AGGREGATOR | [12:43:01.255] READING plant1/lineA/temperature = 70.61 qos=1
+A-temp     | [sensor-lineA-temperature] #12 -> plant1/lineA/temperature 70.61 C
+AGGREGATOR | [12:43:01.320] READING plant1/lineA/vibration = 3.15 qos=1
+A-vib      | [sensor-lineA-vibration] #9 -> plant1/lineA/vibration 3.15 mm/s
+AGGREGATOR | [12:43:01.756] READING plant1/lineA/temperature = 69.26 qos=1
+AGGREGATOR | [12:43:01.757] READING plant1/lineB/temperature = 69.50 qos=1
+B-temp     | [sensor-lineB-temperature] #11 -> plant1/lineB/temperature 69.50 C
+A-temp     | [sensor-lineA-temperature] #13 -> plant1/lineA/temperature 69.26 C
+AGGREGATOR | [12:43:02.022] READING plant1/lineA/vibration = 3.48 qos=1
+A-vib      | [sensor-lineA-vibration] #10 -> plant1/lineA/vibration 3.48 mm/s
+AGGREGATOR | [12:43:02.258] READING plant1/lineA/temperature = 68.15 qos=1
+A-temp     | [sensor-lineA-temperature] #14 -> plant1/lineA/temperature 68.15 C
+AGGREGATOR | [12:43:02.358] READING plant1/lineB/temperature = 70.98 qos=1
+B-temp     | [sensor-lineB-temperature] #12 -> plant1/lineB/temperature 70.98 C
+
+# note: lineA temperature = 82 stayed under its own limit (85) -> no alert; lineB temperature = 82 exceeded its limit (80) -> alert.
+# vibration limit is 7.0 mm/s, so 9.5 mm/s on lineA/vibration alerts; each topic is judged independently.
+
+====================================================================================================
+B. Retained messages: a subscriber joins late (every reading and the status are retained)
+====================================================================================================
+AGGREGATOR | [12:43:02.723] READING plant1/lineA/vibration = 2.54 qos=1
+A-vib      | [sensor-lineA-vibration] #11 -> plant1/lineA/vibration 2.54 mm/s
+AGGREGATOR | [12:43:02.759] READING plant1/lineA/temperature = 70.85 qos=1
+A-temp     | [sensor-lineA-temperature] #15 -> plant1/lineA/temperature 70.85 C
+LATE-JOINER| [12:43:02.771] LATE-JOINER got plant1/lineA/vibration = 2.54  [RETAINED] +43 ms after connect
+LATE-JOINER| [12:43:02.771] LATE-JOINER got plant1/lineA/temperature = 68.15  [RETAINED] +43 ms after connect
+LATE-JOINER| [12:43:02.772] LATE-JOINER got plant1/lineB/status = online:temperature  [RETAINED] +43 ms after connect
+LATE-JOINER| [12:43:02.772] LATE-JOINER got plant1/lineB/temperature = 70.98  [RETAINED] +43 ms after connect
+LATE-JOINER| [12:43:02.772] LATE-JOINER got plant1/lineA/temperature = 70.85  [live] +43 ms after connect
+AGGREGATOR | [12:43:02.959] READING plant1/lineB/temperature = 69.80 qos=1
+LATE-JOINER| [12:43:02.959] LATE-JOINER got plant1/lineB/temperature = 69.80  [live] +231 ms after connect
+B-temp     | [sensor-lineB-temperature] #13 -> plant1/lineB/temperature 69.80 C
+AGGREGATOR | [12:43:03.260] READING plant1/lineA/temperature = 70.17 qos=1
+LATE-JOINER| [12:43:03.260] LATE-JOINER got plant1/lineA/temperature = 70.17  [live] +531 ms after connect
+A-temp     | [sensor-lineA-temperature] #16 -> plant1/lineA/temperature 70.17 C
+AGGREGATOR | [12:43:03.424] READING plant1/lineA/vibration = 3.60 qos=1
+LATE-JOINER| [12:43:03.424] LATE-JOINER got plant1/lineA/vibration = 3.60  [live] +695 ms after connect
+A-vib      | [sensor-lineA-vibration] #12 -> plant1/lineA/vibration 3.60 mm/s
+AGGREGATOR | [12:43:03.560] READING plant1/lineB/temperature = 71.02 qos=1
+LATE-JOINER| [12:43:03.560] LATE-JOINER got plant1/lineB/temperature = 71.02  [live] +832 ms after connect
+B-temp     | [sensor-lineB-temperature] #14 -> plant1/lineB/temperature 71.02 C
+AGGREGATOR | [12:43:03.677] ---- SUMMARY: latest value per topic ----
+AGGREGATOR |     topic                         latest    n     min     max  limit  state
+AGGREGATOR |     plant1/lineA/temperature       70.17   16   67.34   82.46   85.0  ok
+AGGREGATOR |     plant1/lineA/vibration          3.60   12    2.54    9.43    7.0  ok
+AGGREGATOR |     plant1/lineB/temperature       71.02   14   68.77   81.89   80.0  ok
+AGGREGATOR |     plant1/lineB/status         online:temperature
+AGGREGATOR |     alerts raised so far: 2
+LATE-JOINER| [12:43:03.761] LATE-JOINER got plant1/lineA/temperature = 69.87  [live] +1033 ms after connect
+AGGREGATOR | [12:43:03.761] READING plant1/lineA/temperature = 69.87 qos=1
+A-temp     | [sensor-lineA-temperature] #17 -> plant1/lineA/temperature 69.87 C
+A-vib      | [sensor-lineA-vibration] #13 -> plant1/lineA/vibration 2.47 mm/s
+AGGREGATOR | [12:43:04.125] READING plant1/lineA/vibration = 2.47 qos=1
+LATE-JOINER| [12:43:04.125] LATE-JOINER got plant1/lineA/vibration = 2.47  [live] +1396 ms after connect
+LATE-JOINER| [12:43:04.161] LATE-JOINER got plant1/lineB/temperature = 72.11  [live] +1433 ms after connect
+AGGREGATOR | [12:43:04.162] READING plant1/lineB/temperature = 72.11 qos=1
+B-temp     | [sensor-lineB-temperature] #15 -> plant1/lineB/temperature 72.11 C
+LATE-JOINER| [12:43:04.262] LATE-JOINER got plant1/lineA/temperature = 72.01  [live] +1534 ms after connect
+AGGREGATOR | [12:43:04.262] READING plant1/lineA/temperature = 72.01 qos=1
+A-temp     | [sensor-lineA-temperature] #18 -> plant1/lineA/temperature 72.01 C
+LATE-JOINER| [12:43:04.263] late joiner done: 4 retained, 9 live
+# the messages flagged [RETAINED] arrived within milliseconds of connecting, long before the next live reading.
+
+====================================================================================================
+C. A NEW sensor topic (plant1/lineB/vibration) is started while the aggregator keeps running - no code change
+====================================================================================================
+B-vib      | [sensor-lineB-vibration] connected  topic=plant1/lineB/vibration qos=1 interval=0.8s retain=True lwt=False
+B-vib      | [sensor-lineB-vibration] #1 -> plant1/lineB/vibration 2.49 mm/s
+AGGREGATOR | [12:43:04.347] NEW TOPIC discovered: plant1/lineB/vibration (threshold 7.0)
+AGGREGATOR | [12:43:04.348] READING plant1/lineB/vibration = 2.49 qos=1
+AGGREGATOR | [12:43:04.762] READING plant1/lineB/temperature = 68.83 qos=1
+B-temp     | [sensor-lineB-temperature] #16 -> plant1/lineB/temperature 68.83 C
+AGGREGATOR | [12:43:04.763] READING plant1/lineA/temperature = 70.10 qos=1
+A-temp     | [sensor-lineA-temperature] #19 -> plant1/lineA/temperature 70.10 C
+AGGREGATOR | [12:43:04.825] READING plant1/lineA/vibration = 3.41 qos=1
+A-vib      | [sensor-lineA-vibration] #14 -> plant1/lineA/vibration 3.41 mm/s
+B-vib      | [sensor-lineB-vibration] #2 -> plant1/lineB/vibration 2.70 mm/s
+AGGREGATOR | [12:43:05.148] READING plant1/lineB/vibration = 2.70 qos=1
+AGGREGATOR | [12:43:05.264] READING plant1/lineA/temperature = 72.53 qos=1
+A-temp     | [sensor-lineA-temperature] #20 -> plant1/lineA/temperature 72.53 C
+AGGREGATOR | [12:43:05.363] READING plant1/lineB/temperature = 68.02 qos=1
+B-temp     | [sensor-lineB-temperature] #17 -> plant1/lineB/temperature 68.02 C
+AGGREGATOR | [12:43:05.527] READING plant1/lineA/vibration = 2.59 qos=1
+A-vib      | [sensor-lineA-vibration] #15 -> plant1/lineA/vibration 2.59 mm/s
+AGGREGATOR | [12:43:05.765] READING plant1/lineA/temperature = 69.03 qos=1
+A-temp     | [sensor-lineA-temperature] #21 -> plant1/lineA/temperature 69.03 C
+AGGREGATOR | [12:43:05.949] READING plant1/lineB/vibration = 3.67 qos=1
+B-vib      | [sensor-lineB-vibration] #3 -> plant1/lineB/vibration 3.67 mm/s
+AGGREGATOR | [12:43:05.965] READING plant1/lineB/temperature = 71.47 qos=1
+B-temp     | [sensor-lineB-temperature] #18 -> plant1/lineB/temperature 71.47 C
+A-vib      | [sensor-lineA-vibration] #16 -> plant1/lineA/vibration 2.52 mm/s
+AGGREGATOR | [12:43:06.228] READING plant1/lineA/vibration = 2.52 qos=1
+AGGREGATOR | [12:43:06.267] READING plant1/lineA/temperature = 68.39 qos=1
+A-temp     | [sensor-lineA-temperature] #22 -> plant1/lineA/temperature 68.39 C
+AGGREGATOR | [12:43:06.566] READING plant1/lineB/temperature = 70.55 qos=1
+B-temp     | [sensor-lineB-temperature] #19 -> plant1/lineB/temperature 70.55 C
+AGGREGATOR | [12:43:06.750] READING plant1/lineB/vibration = 9.39 qos=1
+AGGREGATOR | [12:43:06.750] ALERT   plant1/lineB/vibration = 9.39 exceeds 7.0
+B-vib      | [sensor-lineB-vibration] #4 -> plant1/lineB/vibration 9.39 mm/s
+AGGREGATOR | [12:43:06.768] READING plant1/lineA/temperature = 71.41 qos=1
+A-temp     | [sensor-lineA-temperature] #23 -> plant1/lineA/temperature 71.41 C
+AGGREGATOR | [12:43:06.928] READING plant1/lineA/vibration = 3.39 qos=1
+A-vib      | [sensor-lineA-vibration] #17 -> plant1/lineA/vibration 3.39 mm/s
+AGGREGATOR | [12:43:07.167] READING plant1/lineB/temperature = 69.89 qos=1
+B-temp     | [sensor-lineB-temperature] #20 -> plant1/lineB/temperature 69.89 C
+AGGREGATOR | [12:43:07.269] READING plant1/lineA/temperature = 70.38 qos=1
+A-temp     | [sensor-lineA-temperature] #24 -> plant1/lineA/temperature 70.38 C
+AGGREGATOR | [12:43:07.551] READING plant1/lineB/vibration = 3.28 qos=1
+AGGREGATOR | [12:43:07.551] CLEARED plant1/lineB/vibration = 3.28 back under 7.0
+B-vib      | [sensor-lineB-vibration] #5 -> plant1/lineB/vibration 3.28 mm/s
+AGGREGATOR | [12:43:07.630] READING plant1/lineA/vibration = 2.96 qos=1
+A-vib      | [sensor-lineA-vibration] #18 -> plant1/lineA/vibration 2.96 mm/s
+AGGREGATOR | [12:43:07.686] ---- SUMMARY: latest value per topic ----
+AGGREGATOR |     topic                         latest    n     min     max  limit  state
+AGGREGATOR |     plant1/lineA/temperature       70.38   24   67.34   82.46   85.0  ok
+AGGREGATOR |     plant1/lineA/vibration          2.96   18    2.47    9.43    7.0  ok
+AGGREGATOR |     plant1/lineB/temperature       69.89   20   68.02   81.89   80.0  ok
+AGGREGATOR |     plant1/lineB/vibration          3.28    5    2.49    9.39    7.0  ok
+AGGREGATOR |     plant1/lineB/status         online:temperature
+AGGREGATOR |     alerts raised so far: 3
+AGGREGATOR | [12:43:07.768] READING plant1/lineB/temperature = 71.10 qos=1
+B-temp     | [sensor-lineB-temperature] #21 -> plant1/lineB/temperature 71.10 C
+AGGREGATOR | [12:43:07.769] READING plant1/lineA/temperature = 71.53 qos=1
+A-temp     | [sensor-lineA-temperature] #25 -> plant1/lineA/temperature 71.53 C
+
+====================================================================================================
+D. Last Will: kill -9 on the lineB temperature sensor (no clean disconnect)
+====================================================================================================
+# [12:43:07] sending SIGKILL to the B-temp sensor (pid 632)
+AGGREGATOR | [12:43:07.850] STATUS  plant1/lineB/status = offline:temperature qos=1  <-- LAST WILL received: sensor lost
+# will observed by the aggregator 20 ms after the kill
+AGGREGATOR | [12:43:08.271] READING plant1/lineA/temperature = 69.03 qos=1
+A-temp     | [sensor-lineA-temperature] #26 -> plant1/lineA/temperature 69.03 C
+AGGREGATOR | [12:43:08.331] READING plant1/lineA/vibration = 3.29 qos=1
+A-vib      | [sensor-lineA-vibration] #19 -> plant1/lineA/vibration 3.29 mm/s
+AGGREGATOR | [12:43:08.352] READING plant1/lineB/vibration = 2.93 qos=1
+B-vib      | [sensor-lineB-vibration] #6 -> plant1/lineB/vibration 2.93 mm/s
+AGGREGATOR | [12:43:08.771] READING plant1/lineA/temperature = 67.60 qos=1
+A-temp     | [sensor-lineA-temperature] #27 -> plant1/lineA/temperature 67.60 C
+AGGREGATOR | [12:43:09.032] READING plant1/lineA/vibration = 3.51 qos=1
+A-vib      | [sensor-lineA-vibration] #20 -> plant1/lineA/vibration 3.51 mm/s
+AGGREGATOR | [12:43:09.153] READING plant1/lineB/vibration = 2.76 qos=1
+B-vib      | [sensor-lineB-vibration] #7 -> plant1/lineB/vibration 2.76 mm/s
+AGGREGATOR | [12:43:09.273] READING plant1/lineA/temperature = 69.01 qos=1
+A-temp     | [sensor-lineA-temperature] #28 -> plant1/lineA/temperature 69.01 C
+
+# a fresh late joiner now sees the retained 'offline' status plus the last retained readings:
+LATE-JOINER| [12:43:09.488] LATE-JOINER got plant1/lineA/vibration = 3.51  [RETAINED] +47 ms after connect
+LATE-JOINER| [12:43:09.491] LATE-JOINER got plant1/lineA/temperature = 69.01  [RETAINED] +51 ms after connect
+LATE-JOINER| [12:43:09.492] LATE-JOINER got plant1/lineB/status = offline:temperature  [RETAINED] +51 ms after connect
+LATE-JOINER| [12:43:09.492] LATE-JOINER got plant1/lineB/temperature = 71.10  [RETAINED] +51 ms after connect
+LATE-JOINER| [12:43:09.492] LATE-JOINER got plant1/lineB/vibration = 2.76  [RETAINED] +51 ms after connect
+AGGREGATOR | [12:43:09.733] READING plant1/lineA/vibration = 3.22 qos=1
+LATE-JOINER| [12:43:09.733] LATE-JOINER got plant1/lineA/vibration = 3.22  [live] +292 ms after connect
+A-vib      | [sensor-lineA-vibration] #21 -> plant1/lineA/vibration 3.22 mm/s
+AGGREGATOR | [12:43:09.774] READING plant1/lineA/temperature = 70.94 qos=1
+LATE-JOINER| [12:43:09.774] LATE-JOINER got plant1/lineA/temperature = 70.94  [live] +333 ms after connect
+A-temp     | [sensor-lineA-temperature] #29 -> plant1/lineA/temperature 70.94 C
+AGGREGATOR | [12:43:09.954] READING plant1/lineB/vibration = 3.17 qos=1
+LATE-JOINER| [12:43:09.954] LATE-JOINER got plant1/lineB/vibration = 3.17  [live] +513 ms after connect
+B-vib      | [sensor-lineB-vibration] #8 -> plant1/lineB/vibration 3.17 mm/s
+LATE-JOINER| [12:43:10.275] LATE-JOINER got plant1/lineA/temperature = 70.13  [live] +834 ms after connect
+A-temp     | [sensor-lineA-temperature] #30 -> plant1/lineA/temperature 70.13 C
+AGGREGATOR | [12:43:10.275] READING plant1/lineA/temperature = 70.13 qos=1
+LATE-JOINER| [12:43:10.434] LATE-JOINER got plant1/lineA/vibration = 2.61  [live] +993 ms after connect
+AGGREGATOR | [12:43:10.434] READING plant1/lineA/vibration = 2.61 qos=1
+A-vib      | [sensor-lineA-vibration] #22 -> plant1/lineA/vibration 2.61 mm/s
+AGGREGATOR | [12:43:10.755] READING plant1/lineB/vibration = 2.46 qos=1
+LATE-JOINER| [12:43:10.755] LATE-JOINER got plant1/lineB/vibration = 2.46  [live] +1314 ms after connect
+B-vib      | [sensor-lineB-vibration] #9 -> plant1/lineB/vibration 2.46 mm/s
+LATE-JOINER| [12:43:10.756] late joiner done: 5 retained, 6 live
+AGGREGATOR | [12:43:10.776] READING plant1/lineA/temperature = 67.39 qos=1
+A-temp     | [sensor-lineA-temperature] #31 -> plant1/lineA/temperature 67.39 C
+
+====================================================================================================
+E. Clean shutdown (SIGINT): clean disconnects do not trigger any will; aggregator prints its final summary
+====================================================================================================
+AGGREGATOR | [12:43:11.135] READING plant1/lineA/vibration = 3.23 qos=1
+A-vib      | [sensor-lineA-vibration] #23 -> plant1/lineA/vibration 3.23 mm/s
+AGGREGATOR | [12:43:11.556] READING plant1/lineB/vibration = 2.77 qos=1
+B-vib      | [sensor-lineB-vibration] #10 -> plant1/lineB/vibration 2.77 mm/s
+AGGREGATOR | [12:43:11.695] ---- SUMMARY: latest value per topic ----
+AGGREGATOR |     topic                         latest    n     min     max  limit  state
+AGGREGATOR |     plant1/lineA/temperature       67.39   31   67.34   82.46   85.0  ok
+AGGREGATOR |     plant1/lineA/vibration          3.23   23    2.47    9.43    7.0  ok
+AGGREGATOR |     plant1/lineB/temperature       71.10   21   68.02   81.89   80.0  ok
+AGGREGATOR |     plant1/lineB/vibration          2.77   10    2.46    9.39    7.0  ok
+AGGREGATOR |     plant1/lineB/status         offline:temperature
+AGGREGATOR |     alerts raised so far: 3
+A-temp     | [sensor-lineA-temperature] clean disconnect after 31 readings
+A-vib      | [sensor-lineA-vibration] clean disconnect after 23 readings
+B-vib      | [sensor-lineB-vibration] clean disconnect after 10 readings
+AGGREGATOR | [12:43:13.086] ---- FINAL SUMMARY: latest value per topic ----
+AGGREGATOR |     topic                         latest    n     min     max  limit  state
+AGGREGATOR |     plant1/lineA/temperature       67.39   31   67.34   82.46   85.0  ok
+AGGREGATOR |     plant1/lineA/vibration          3.23   23    2.47    9.43    7.0  ok
+AGGREGATOR |     plant1/lineB/temperature       71.10   21   68.02   81.89   80.0  ok
+AGGREGATOR |     plant1/lineB/vibration          2.77   10    2.46    9.39    7.0  ok
+AGGREGATOR |     plant1/lineB/status         offline:temperature
+AGGREGATOR |     alerts raised so far: 3

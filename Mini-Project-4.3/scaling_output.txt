@@ -1,0 +1,7 @@
+     S    C |  polling: requests/s  sensor-side endpoints  consumer config entries |  pub/sub: publishes/s  sensor-side endpoints  consumer config entries  broker deliveries/s
+     3    2 |                    6                      2                        6 |                     3                      1                        2                    6
+     3   10 |                   30                     10                       30 |                     3                      1                       10                   30
+   100    5 |                  500                      5                      500 |                   100                      1                        5                  500
+   100   50 |                 5000                     50                     5000 |                   100                      1                       50                 5000
+  1000   50 |                50000                     50                    50000 |                  1000                      1                       50                50000
+ 10000  100 |              1000000                    100                  1000000 |                 10000                      1                      100              1000000

@@ -1,0 +1,106 @@
+[07:51:00.933] ===== local Mosquitto broker started on 127.0.0.1:18831
+[07:51:00.933] ===== A. normal operation: dashboard + alert subscriber, then the publisher (1 s interval so the demo is short)
+ALERT-A  | [07:51:01.002] ALERTER   connected (Success); subscribing 'factory/+/temperature' at QoS 1, threshold 90.0
+DASH-A   | [07:51:01.010] DASHBOARD connected (Success); subscribing ['factory/line3/temperature', 'factory/line3/status'] at QoS 1
+SENSOR   | [07:51:01.609] connected to localhost:18831 as 'line3-temp-sensor' (reason: Success)
+SENSOR   | [07:51:01.610] status  -> factory/line3/status = online (retained)
+SENSOR   | [07:51:01.610] publish #1   factory/line3/temperature = 93.5  (QoS 1, retained)
+DASH-A   | [07:51:01.610] DASHBOARD factory/line3/status           online   qos=1
+DASH-A   | [07:51:01.610] DASHBOARD factory/line3/temperature      93.5     qos=1
+ALERT-A  | [07:51:01.610] ALERT     factory/line3/temperature = 93.5 exceeds 90.0
+DASH-A   | [07:51:02.611] DASHBOARD factory/line3/temperature      93.2     qos=1
+ALERT-A  | [07:51:02.611] ALERT     factory/line3/temperature = 93.2 exceeds 90.0
+SENSOR   | [07:51:02.611] publish #2   factory/line3/temperature = 93.2  (QoS 1, retained)
+SENSOR   | [07:51:03.612] publish #3   factory/line3/temperature = 62.0  (QoS 1, retained)
+DASH-A   | [07:51:03.613] DASHBOARD factory/line3/temperature      62.0     qos=1
+SENSOR   | [07:51:04.613] publish #4   factory/line3/temperature = 63.0  (QoS 1, retained)
+DASH-A   | [07:51:04.614] DASHBOARD factory/line3/temperature      63.0     qos=1
+SENSOR   | [07:51:05.614] publish #5   factory/line3/temperature = 89.2  (QoS 1, retained)
+DASH-A   | [07:51:05.615] DASHBOARD factory/line3/temperature      89.2     qos=1
+SENSOR   | [07:51:06.616] publish #6   factory/line3/temperature = 85.8  (QoS 1, retained)
+DASH-A   | [07:51:06.617] DASHBOARD factory/line3/temperature      85.8     qos=1
+SENSOR   | [07:51:07.620] publish #7   factory/line3/temperature = 83.4  (QoS 1, retained)
+DASH-A   | [07:51:07.626] DASHBOARD stopped; 7 messages received
+ALERT-A  | [07:51:07.621] ALERTER   stopped; 6 numeric readings seen, 2 alerts
+[07:51:07.691] ===== A result: sensor published 6 readings; dashboard printed 6 temperature lines; alert subscriber: 6 numeric readings seen, 2 alerts
+[07:51:07.691] ===== B. late subscriber: restart the dashboard while the publisher keeps running
+DASH-LATE| [07:51:07.750] DASHBOARD connected (Success); subscribing ['factory/line3/temperature', 'factory/line3/status'] at QoS 1
+DASH-LATE| [07:51:07.794] DASHBOARD factory/line3/temperature      83.4     qos=1  [RETAINED]
+DASH-LATE| [07:51:07.794] DASHBOARD factory/line3/status           online   qos=1  [RETAINED]
+SENSOR   | [07:51:08.634] publish #8   factory/line3/temperature = 70.8  (QoS 1, retained)
+DASH-LATE| [07:51:08.635] DASHBOARD factory/line3/temperature      70.8     qos=1
+SENSOR   | [07:51:09.635] publish #9   factory/line3/temperature = 81.2  (QoS 1, retained)
+DASH-LATE| [07:51:09.636] DASHBOARD factory/line3/temperature      81.2     qos=1
+SENSOR   | [07:51:10.636] publish #10  factory/line3/temperature = 81.2  (QoS 1, retained)
+DASH-LATE| [07:51:10.637] DASHBOARD factory/line3/temperature      81.2     qos=1
+DASH-LATE| [07:51:10.637] DASHBOARD stopped; 5 messages received
+[07:51:10.681] ===== B result: 2 retained messages (temperature=83.4, status=online) arrived 44 ms after the connection was made; the next live reading came 0.88 s after connecting
+[07:51:10.681] ===== C. ungraceful termination of the publisher (hard kill)
+DASH-C   | [07:51:10.755] DASHBOARD connected (Success); subscribing ['factory/line3/temperature', 'factory/line3/status'] at QoS 1
+DASH-C   | [07:51:10.798] DASHBOARD factory/line3/temperature      81.2     qos=1  [RETAINED]
+DASH-C   | [07:51:10.798] DASHBOARD factory/line3/status           online   qos=1  [RETAINED]
+[07:51:11.082] ===== kill -9 SENSOR (no DISCONNECT packet is sent)
+DASH-C   | [07:51:11.084] DASHBOARD factory/line3/status           offline  qos=1
+DASH-C   | [07:51:15.092] DASHBOARD stopped; 3 messages received
+[07:51:15.146] ===== C result: broker published the will ('offline') 20 ms after the kill - the publisher sent nothing. The OS closed the TCP socket, so the broker noticed at once (no keep-alive wait).
+[07:51:15.146] ===== D. frozen publisher (SIGSTOP): socket stays open, so only the keep-alive timer can reveal the failure (keep-alive = 4 s)
+DASH-D   | [07:51:15.214] DASHBOARD connected (Success); subscribing ['factory/line3/temperature', 'factory/line3/status'] at QoS 1
+SENSOR-2 | [07:51:15.219] connected to localhost:18831 as 'line3-temp-sensor' (reason: Success)
+SENSOR-2 | [07:51:15.220] status  -> factory/line3/status = online (retained)
+SENSOR-2 | [07:51:15.220] publish #1   factory/line3/temperature = 81.8  (QoS 1, retained)
+DASH-D   | [07:51:15.258] DASHBOARD factory/line3/temperature      81.2     qos=1  [RETAINED]
+DASH-D   | [07:51:15.258] DASHBOARD factory/line3/status           offline  qos=1  [RETAINED]
+DASH-D   | [07:51:15.258] DASHBOARD factory/line3/status           online   qos=1
+DASH-D   | [07:51:15.258] DASHBOARD factory/line3/temperature      81.8     qos=1
+SENSOR-2 | [07:51:16.221] publish #2   factory/line3/temperature = 86.0  (QoS 1, retained)
+DASH-D   | [07:51:16.222] DASHBOARD factory/line3/temperature      86.0     qos=1
+SENSOR-2 | [07:51:17.222] publish #3   factory/line3/temperature = 87.8  (QoS 1, retained)
+DASH-D   | [07:51:17.223] DASHBOARD factory/line3/temperature      87.8     qos=1
+[07:51:17.650] ===== SIGSTOP sensor (process frozen, no more packets, TCP connection still open)
+DASH-D   | [07:51:24.742] DASHBOARD factory/line3/status           offline  qos=1
+DASH-D   | [07:51:32.751] DASHBOARD stopped; 7 messages received
+[07:51:32.804] ===== D result: will published 7.1 s after the freeze (keep-alive 4 s, so the nominal limit is 1.5 x 4 = 6 s; the broker checks keep-alives periodically, so detection is somewhat later than the nominal limit)
+[07:51:32.804] ===== E. clean disconnect: publisher exits normally after 3 readings
+SENSOR-3 | [07:51:32.871] connected to localhost:18831 as 'line3-temp-sensor' (reason: Success)
+SENSOR-3 | [07:51:32.871] status  -> factory/line3/status = online (retained)
+SENSOR-3 | [07:51:32.872] publish #1   factory/line3/temperature = 67.9  (QoS 1, retained)
+SENSOR-3 | [07:51:33.372] publish #2   factory/line3/temperature = 93.7  (QoS 1)
+SENSOR-3 | [07:51:33.873] publish #3   factory/line3/temperature = 64.4  (QoS 1)
+SENSOR-3 | [07:51:33.874] clean disconnect after 3 readings
+DASH-E   | [07:51:34.303] DASHBOARD connected (Success); subscribing ['factory/line3/temperature', 'factory/line3/status'] at QoS 1
+DASH-E   | [07:51:34.346] DASHBOARD factory/line3/temperature      67.9     qos=1  [RETAINED]
+DASH-E   | [07:51:34.346] DASHBOARD factory/line3/status           online   qos=1  [RETAINED]
+DASH-E   | [07:51:36.349] DASHBOARD stopped; 2 messages received
+[07:51:36.406] ===== E result: no will was published; a new subscriber still sees the retained status 'online' although the publisher is gone (stale). Publish 'offline' explicitly before a clean exit (--offline-on-exit).
+[07:51:36.406] ===== F. lab task 1: add a humidity sensor; alert subscriber now subscribes to factory/line3/+
+ALERT-F  | [07:51:36.473] ALERTER   connected (Success); subscribing 'factory/line3/+' at QoS 1, threshold 90.0
+DASH-F   | [07:51:36.475] DASHBOARD connected (Success); subscribing ['factory/line3/temperature', 'factory/line3/humidity', 'factory/line3/status'] at QoS 1
+DASH-F   | [07:51:36.522] DASHBOARD factory/line3/temperature      67.9     qos=1  [RETAINED]
+DASH-F   | [07:51:36.522] DASHBOARD factory/line3/status           online   qos=1  [RETAINED]
+TEMP     | [07:51:36.974] connected to localhost:18831 as 'line3-temp-sensor' (reason: Success)
+DASH-F   | [07:51:36.974] DASHBOARD factory/line3/status           online   qos=1
+DASH-F   | [07:51:36.975] DASHBOARD factory/line3/temperature      68.3     qos=1
+TEMP     | [07:51:36.974] status  -> factory/line3/status = online (retained)
+TEMP     | [07:51:36.975] publish #1   factory/line3/temperature = 68.3  (QoS 1, retained)
+HUMID    | [07:51:36.976] connected to localhost:18831 as 'line3-humidity-sensor' (reason: Success)
+HUMID    | [07:51:36.977] status  -> factory/line3/humidity_status = online (retained)
+HUMID    | [07:51:36.977] publish #1   factory/line3/humidity = 50.6  (QoS 1, retained)
+DASH-F   | [07:51:36.977] DASHBOARD factory/line3/humidity         50.6     qos=1
+TEMP     | [07:51:37.975] publish #2   factory/line3/temperature = 79.0  (QoS 1, retained)
+DASH-F   | [07:51:37.976] DASHBOARD factory/line3/temperature      79.0     qos=1
+HUMID    | [07:51:37.977] publish #2   factory/line3/humidity = 44.6  (QoS 1, retained)
+DASH-F   | [07:51:37.978] DASHBOARD factory/line3/humidity         44.6     qos=1
+TEMP     | [07:51:38.976] publish #3   factory/line3/temperature = 72.9  (QoS 1, retained)
+DASH-F   | [07:51:38.977] DASHBOARD factory/line3/temperature      72.9     qos=1
+HUMID    | [07:51:38.979] publish #3   factory/line3/humidity = 57.8  (QoS 1, retained)
+DASH-F   | [07:51:38.979] DASHBOARD factory/line3/humidity         57.8     qos=1
+TEMP     | [07:51:39.978] publish #4   factory/line3/temperature = 81.1  (QoS 1, retained)
+DASH-F   | [07:51:39.978] DASHBOARD factory/line3/temperature      81.1     qos=1
+TEMP     | [07:51:39.979] clean disconnect after 4 readings
+HUMID    | [07:51:39.980] publish #4   factory/line3/humidity = 47.0  (QoS 1, retained)
+DASH-F   | [07:51:39.982] DASHBOARD factory/line3/humidity         47.0     qos=1
+HUMID    | [07:51:39.982] clean disconnect after 4 readings
+DASH-F   | [07:51:41.984] DASHBOARD stopped; 11 messages received
+ALERT-F  | [07:51:41.988] ALERTER   stopped; 9 numeric readings seen, 0 alerts
+[07:51:42.030] ===== F result: 9 numeric readings seen, 0 alerts (temperature AND humidity readings, status texts ignored, threshold logic unchanged)
+[07:51:42.145] ===== broker stopped

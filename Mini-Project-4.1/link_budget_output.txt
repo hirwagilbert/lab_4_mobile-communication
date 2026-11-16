@@ -1,0 +1,63 @@
+====================================================================================================
+PART B: 200 sensors, 25 km2 farm, 12-byte reading every 30 min, max distance 8 km, target 5 y on 19000 mAh
+Path loss: PL(d) = 91.5 + 10 x 3.5 x log10(d/1 km);  PL(8 km) = 123.11 dB
+MCL = Ptx - receiver sensitivity:  NB-IoT 23 - (-129) = 152 dB,  LTE-M (CE Mode B) 23 - (-125) = 148 dB,  LoRaWAN SF12 14 - (-137) = 151 dB
+
+Battery assumptions (representative figures, NOT measurements):
+  NB-IoT               TX 110 mA x 8.00 s; sleep 5 uA; repetition-based coverage enhancement, PSM sleep
+  LTE-M (CE Mode B)    TX 190 mA x 6.00 s; sleep 8 uA; higher transmit current, shorter on-air time than NB-IoT
+  LoRaWAN SF12         TX 44 mA x 1.48 s + RX 12 mA x 0.4 s; sleep 5 uA; time-on-air 1.48 s (Semtech formula), two short RX windows
+  5G RedCap            TX 250 mA x 1.50 s; sleep 15 uA; representative: 20 MHz carrier, noise figure 7 dB, low-SNR MCS; eDRX sleep
+  Cycles per year = 17520; self-discharge 1 %/year = 190 mAh/year
+
+--- Comparison for the assigned scenario (manual technologies) ---
+Technology            Ptx   Sens    MCL      PL  Margin  mAh/cycle  mAh/year   Years  Links?
+NB-IoT                 23   -129    152   123.1    28.9     0.2469      4516     4.2  yes (>= 10 dB fade margin)
+LTE-M (CE Mode B)      23   -125    148   123.1    24.9     0.3207      5808     3.3  yes (>= 10 dB fade margin)
+LoRaWAN SF12           14   -137    151   123.1    27.9     0.0220       575    33.1  yes (>= 10 dB fade margin)
+
+--- Lab task 5: with 5G RedCap added ---
+Technology            Ptx   Sens    MCL      PL  Margin  mAh/cycle  mAh/year   Years  Links?
+NB-IoT                 23   -129    152   123.1    28.9     0.2469      4516     4.2  yes (>= 10 dB fade margin)
+LTE-M (CE Mode B)      23   -125    148   123.1    24.9     0.3207      5808     3.3  yes (>= 10 dB fade margin)
+LoRaWAN SF12           14   -137    151   123.1    27.9     0.0220       575    33.1  yes (>= 10 dB fade margin)
+5G RedCap              23   -100    123   123.1    -0.1     0.1117      2146     8.9  NO
+
+--- Requirements check (coverage, battery target, infrastructure, fees) ---
+Technology           link closes  >=10 dB margin  >= 5 y battery  operator net needed  per-device fee  Feasible here?
+NB-IoT                       yes             yes              no                  yes             yes  no
+LTE-M (CE Mode B)            yes             yes              no                  yes             yes  no
+LoRaWAN SF12                 yes             yes             yes                   no              no  YES
+5G RedCap                     no              no             yes                  yes             yes  no
+
+--- LoRaWAN capacity check (200 nodes, worst case: every node at SF12) ---
+  3 channels: offered load G = 0.055 per channel, pure-ALOHA success probability exp(-2G) = 89.6 %
+  8 channels: offered load G = 0.021 per channel, pure-ALOHA success probability exp(-2G) = 96.0 %
+  per-node airtime duty cycle = 0.082 % (EU868 sub-band limit 1 %);  one central gateway: farthest point of a 25 km2 square from its centre is 3.5 km, well inside 8 km
+
+--- Sensitivity of battery life to the uncertain active-phase energy (x0.5, x1, x1.5, x2) ---
+Technology               x0.5       x1     x1.5       x2
+NB-IoT                    8.0      4.2      2.9      2.2
+LTE-M (CE Mode B)         6.3      3.3      2.2      1.7
+LoRaWAN SF12             47.0     33.1     25.5     20.8
+5G RedCap                15.4      8.9      6.2      4.8
+
+--- Lab task 6: path-loss exponent sweep at 8 km (coverage margin in dB) ---
+Technology              n=2.5    n=3.0    n=3.5    n=4.0    n=4.5   max n that closes
+NB-IoT                   37.9     33.4     28.9     24.4     19.9                6.70
+LTE-M (CE Mode B)        33.9     29.4     24.9     20.4     15.9                6.26
+LoRaWAN SF12             36.9     32.4     27.9     23.4     18.9                6.59
+5G RedCap                 8.9      4.4     -0.1     -4.6     -9.1                3.49
+  PL(8 km): n=2.5: 114.1 dB, n=3.0: 118.6 dB, n=3.5: 123.1 dB, n=4.0: 127.6 dB, n=4.5: 132.1 dB
+
+--- Lab task 4: fleet-tracked shipping container across an ocean (single-distance link budget) ---
+Requirement: stay connected for weeks, mobile, no terrestrial coverage. Same formula, over-water exponent n = 2.0.
+Distance to nearest base station                  NB-IoT   LTE-M (CE Mode B)        LoRaWAN SF12           5G RedCap
+8 km (PL = 109.6 dB)                                42.4                38.4                41.4                13.4
+35 km (PL = 122.4 dB)                               29.6                25.6                28.6                 0.6
+100 km (PL = 131.5 dB)                              20.5                16.5                19.5                -8.5
+300 km (PL = 141.0 dB)                              11.0                 7.0                10.0               -18.0
+  Line-of-sight horizon for a 50 m mast and a 10 m container stack: about 37 km, so the 100 km and 300 km rows have no radio path at all, whatever the margin says.
+
+--- Charts ---
+link_margin.png, link_battery.png, link_exponent_sweep.png written

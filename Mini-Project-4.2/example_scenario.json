@@ -1,0 +1,13 @@
+{
+  "name": "1. Smart water meter",
+  "expected": "NB-IoT",
+  "note": "basement/underground meters, 50 B per day, 15-year battery, stationary, utility buys operator connectivity, 50 000 units on a strict budget",
+  "message_bytes": 50,
+  "interval_s": 86400,
+  "coverage": "deep_indoor",
+  "battery_years": 15,
+  "mobility": "stationary",
+  "infrastructure": "operator",
+  "devices": 50000,
+  "budget": "strict"
+}
